@@ -62,23 +62,22 @@
   .reveal.show{opacity:1;transform:translateY(0);}
 
   /* ---------- HERO ---------- */
-  .hero{position:relative;height:100vh;min-height:640px;overflow:hidden;}
-  .hero > img{width:100%;height:100%;object-fit:cover;object-position:center 62%;display:block;}
+  .hero{position:relative;height:100vh;min-height:680px;overflow:hidden;}
+  .hero > img{position:absolute;top:0;left:0;width:100%;height:76%;object-fit:cover;object-position:center 80%;display:block;}
   .hero::after{
-    content:'';position:absolute;inset:0;
-    background:linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%, rgba(249,248,243,0.45) 74%, var(--cream) 100%);
+    content:'';position:absolute;left:0;right:0;top:0;height:76%;
+    background:linear-gradient(to bottom, rgba(249,248,243,0) 0%, rgba(249,248,243,0) 72%, rgba(249,248,243,0.6) 88%, var(--cream) 100%);
   }
   .hero-content{
-    position:absolute;top:0;left:0;right:0;z-index:2;
-    text-align:center;padding:9vh 30px 0 30px;
+    position:absolute;bottom:0;left:0;right:0;z-index:2;
+    text-align:center;padding:0 24px 96px 24px;
   }
-  .hero-mono{width:58px;height:auto;margin-bottom:14px;}
+  .hero-mono{width:58px;height:auto;margin-bottom:10px;}
   .hero-names{
     font-family:'Cormorant Garamond',serif;font-weight:500;
-    font-size:44px;color:#2f2f28;line-height:1.05;
+    font-size:clamp(30px, 9.4vw, 42px);color:#2f2f28;line-height:1.1;white-space:nowrap;
   }
-  .hero-names span{display:block;white-space:nowrap;}
-  .hero-names .amp{font-family:'Pinyon Script',cursive;color:var(--gold);font-size:40px;line-height:1.2;}
+  .hero-names .amp{font-family:'Pinyon Script',cursive;color:var(--gold);font-size:.9em;padding:0 4px;}
   .hero-loc{font-size:11px;letter-spacing:4px;color:var(--sage-dark);margin-top:12px;font-weight:500;}
 
   /* ---------- GENERIC SECTION ---------- */
@@ -262,7 +261,7 @@
     <img src="midia/noivos-por-do-sol.jpg" alt="Jussara e João Pedro">
     <div class="hero-content">
       <img class="hero-mono" src="midia/monograma-dourado.png" alt="J&amp;J">
-      <div class="hero-names"><span>Jussara</span><span class="amp">&amp;</span><span>João Pedro</span></div>
+      <div class="hero-names">Jussara <span class="amp">&amp;</span> João Pedro</div>
       <div class="hero-loc">MURITIBA · BAHIA</div>
     </div>
   </div>
