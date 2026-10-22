@@ -495,7 +495,7 @@
 
   // Lista de presentes (o item em destaque aparece primeiro)
   const grid = document.getElementById('giftGrid');
-  const order = GIFTS.map((g,i)=>({...g,i})).sort((a,b)=>(b.featured?1:0)-(a.featured?1:0));
+  const order = GIFTS.map((g,i)=>Object.assign({i:i},g)).sort((a,b)=>(b.featured?1:0)-(a.featured?1:0));
   grid.innerHTML = order.map(g => {
     const num = String(g.i+1).padStart(2,'0');
     return `
@@ -576,10 +576,18 @@
   }
 
   // Reveal on scroll
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); } });
-  }, {threshold:0.15});
-  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  // (threshold 0: seções altas, como a lista de presentes, nunca chegam a 15% visíveis)
+  const reveals = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('show'); observer.unobserve(e.target); }
+      });
+    }, {threshold:0, rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(el=>observer.observe(el));
+  } else {
+    reveals.forEach(el=>el.classList.add('show'));
+  }
 </script>
 
 </body>
