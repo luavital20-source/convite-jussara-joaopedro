@@ -120,8 +120,20 @@
   .dl-sub{font-size:11.5px;color:var(--muted);margin-top:2px;}
 
   /* ---------- VENUE ---------- */
-  .venue-photo{width:100%;border-radius:16px;overflow:hidden;margin-bottom:26px;}
-  .venue-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 75%;display:block;}
+  .venue-art{width:82%;max-width:330px;margin:0 auto 26px auto;}
+  .venue-art img{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(56,57,47,.12));}
+
+  /* ---------- NOSSA HISTÓRIA ---------- */
+  .story-photo{width:100%;border-radius:16px;overflow:hidden;margin:6px 0 30px 0;}
+  .story-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 75%;display:block;}
+  .story p{font-size:14px;line-height:1.95;color:#5c5e52;max-width:360px;margin:0 auto 18px auto;}
+  .story p:first-of-type::first-letter{
+    font-family:'Cormorant Garamond',serif;font-size:46px;line-height:.8;color:var(--gold);
+    float:left;padding:6px 8px 0 0;
+  }
+  .story p{text-align:left;}
+  .story p.closing{text-align:center;margin-top:26px;}
+  .story .closing{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;line-height:1.6;color:var(--sage-dark);}
   .badge{
     display:inline-block;background:var(--mint-pale);color:var(--sage-dark);
     font-size:11px;letter-spacing:2.5px;font-weight:500;padding:7px 18px;border-radius:30px;margin-bottom:18px;
@@ -243,6 +255,25 @@
     display:flex;align-items:center;gap:14px;}
   .or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--line);}
 
+  /* ---------- MÚSICA ---------- */
+  #musicBtn{
+    position:fixed;bottom:18px;right:18px;z-index:60;
+    width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--card);color:var(--sage-dark);
+    box-shadow:0 10px 26px -10px rgba(56,57,47,.4);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;visibility:hidden;transition:opacity .6s ease, visibility .6s ease;
+  }
+  #musicBtn.show{opacity:1;visibility:visible;}
+  #musicBtn svg{width:20px;height:20px;stroke:var(--sage-dark);}
+  #musicBtn .bars{display:none;align-items:flex-end;gap:3px;height:16px;}
+  #musicBtn .bars i{width:3px;background:var(--gold);border-radius:2px;animation:eq 1s ease-in-out infinite;}
+  #musicBtn .bars i:nth-child(2){animation-delay:.2s;}
+  #musicBtn .bars i:nth-child(3){animation-delay:.4s;}
+  #musicBtn.playing .bars{display:flex;}
+  #musicBtn.playing svg{display:none;}
+  @keyframes eq{0%,100%{height:4px;}50%{height:16px;}}
+
   /* ---------- FOOTER ---------- */
   footer{padding:60px 32px 50px 32px;text-align:center;}
   footer .mono{width:72px;margin-bottom:16px;}
@@ -260,6 +291,7 @@
   <div class="date">27 · 02 · 2027</div>
   <div class="tap">Toque para abrir</div>
 </div>
+<audio id="bgm" src="midia/musica.mp3" loop preload="auto"></audio>
 
 <div class="wrap">
 
@@ -280,6 +312,20 @@
       <div class="verse-ref">— ECLESIASTES 3:11</div>
     </div>
   </div>
+
+  <!-- NOSSA HISTÓRIA -->
+  <section class="reveal story">
+    <div class="eyebrow">Nossa história</div>
+    <div class="title">Como tudo <em>começou</em></div>
+    <div class="diamond-divider"><span></span></div>
+    <div class="story-photo">
+      <img src="midia/noivos-capela.jpg" alt="Jussara e João Pedro">
+    </div>
+    <p>Nossa história começou em um dia 27, há 9 anos, em um encontro inesperado que mudou o rumo das nossas vidas. O que começou com um simples gostar se transformou em amor, companheirismo e na certeza de que queríamos caminhar juntos.</p>
+    <p>Ao longo desses anos, crescemos, amadurecemos e aprendemos que amar também é escolher um ao outro todos os dias, respeitar nossas diferenças e construir, pouco a pouco, os sonhos que hoje compartilhamos.</p>
+    <p>E foi por isso que escolhemos o mesmo dia 27 para celebrar o início de uma nova história: a nossa vida a dois, agora diante de Deus, com a promessa de seguirmos juntos por todos os dias que virão.</p>
+    <p class="closing">Hoje, o coração transborda gratidão por tudo o que vivemos e emoção por tudo o que ainda está por vir. Afinal, depois de nove anos escrevendo nossa história, chegou o momento de dar início ao capítulo mais bonito dela: o nosso casamento.</p>
+  </section>
 
   <!-- O GRANDE DIA -->
   <section class="reveal">
@@ -312,8 +358,8 @@
 
   <!-- CERIMÔNIA -->
   <section class="reveal" style="padding-top:0;">
-    <div class="venue-photo">
-      <img src="midia/noivos-capela.jpg" alt="Jussara e João Pedro">
+    <div class="venue-art">
+      <img src="midia/igreja-aquarela.webp" alt="Aquarela da Igreja São José">
     </div>
     <div class="badge">CERIMÔNIA RELIGIOSA</div>
     <div class="venue-time">às 17h</div>
@@ -404,6 +450,11 @@
   </footer>
 
 </div>
+
+<button id="musicBtn" onclick="toggleMusic()" aria-label="Pausar ou tocar a música">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+  <span class="bars"><i></i><i></i><i></i></span>
+</button>
 
 <!-- MODAL PRESENTE -->
 <div id="giftModal" onclick="if(event.target===this)closeGift()">
@@ -625,9 +676,18 @@
 
   // Preloader
   const preloader = document.getElementById('preloader');
+  const bgm = document.getElementById('bgm');
+  const musicBtn = document.getElementById('musicBtn');
+  bgm.volume = 0.7;
+  bgm.addEventListener('play',  () => musicBtn.classList.add('playing'));
+  bgm.addEventListener('pause', () => musicBtn.classList.remove('playing'));
+  function toggleMusic(){ bgm.paused ? bgm.play().catch(()=>{}) : bgm.pause(); }
+
   preloader.addEventListener('click', () => {
     preloader.classList.add('hidden');
     document.body.classList.remove('locked');
+    bgm.play().catch(()=>{});          // o toque no splash libera o áudio no celular
+    musicBtn.classList.add('show');
   });
 
   // Countdown
