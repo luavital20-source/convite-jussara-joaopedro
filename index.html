@@ -180,6 +180,10 @@
 
   /* ---------- PRESENTES ---------- */
   .gift-intro{font-size:13.5px;line-height:1.9;color:#5e594c;margin-bottom:26px;}
+  .gift-intro-text{max-width:360px;margin:0 auto 30px auto;}
+  .gift-intro-text p{font-size:13.5px;line-height:1.9;color:#5e594c;margin-bottom:14px;}
+  .gift-intro-text p:last-child{margin-bottom:0;}
+  .gift-intro-text .gift-lead{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;line-height:1.5;color:var(--butter-deep);}
   .gifts{display:grid;grid-template-columns:1fr 1fr;gap:14px;text-align:left;}
   .gift{
     background:var(--card);border-radius:14px;overflow:hidden;
@@ -425,7 +429,11 @@
     <div class="eyebrow">Lista de presentes</div>
     <div class="title">Sugestões de <em>presentes</em></div>
     <div class="diamond-divider"><span></span></div>
-    <p class="gift-intro">Sua presença é o nosso maior presente! Mas, se quiser nos presentear, separamos uma lista bem especial. ✨</p>
+    <div class="gift-intro-text">
+      <p class="gift-lead">A presença de vocês já é um presente muito especial para nós! 🤍</p>
+      <p>Mas, se desejarem nos presentear, preparamos uma listinha com algumas sugestões para nos ajudar a montar nosso cantinho e começar essa nova fase da nossa vida a dois.</p>
+      <p>Mas fiquem à vontade! O mais importante para nós é compartilhar esse momento tão especial com vocês. Todo gesto de carinho será recebido com muito amor! ✨</p>
+    </div>
 
     <div class="gifts" id="giftGrid"></div>
 
