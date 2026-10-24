@@ -231,6 +231,21 @@
   .modal-price{font-size:15px;color:var(--gold);font-weight:500;margin-top:6px;}
   .modal-text{font-size:13px;line-height:1.8;color:#5c5e52;margin:18px 0;}
   .modal-sheet .btn{width:100%;justify-content:center;margin-top:14px;}
+  .modal-sheet .btn[disabled]{opacity:.6;cursor:wait;}
+  .amount-field{display:none;margin-top:16px;}
+  .amount-field.show{display:block;}
+  .amount-field label{display:block;font-size:11px;letter-spacing:2px;color:var(--muted);margin-bottom:8px;}
+  .amount-field input{
+    width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;text-align:center;
+    padding:14px 16px;font-family:'Jost';font-size:18px;color:var(--text);outline:none;
+  }
+  .amount-field input:focus{border-color:var(--sage);}
+  .pay-error{display:none;font-size:12.5px;line-height:1.6;color:#a0533f;margin-top:12px;}
+  .pay-error.show{display:block;}
+  .pay-note{font-size:11px;color:var(--muted);margin-top:10px;}
+  .or-divider{font-size:11px;letter-spacing:2.5px;color:var(--gold);margin:28px 0 6px 0;font-weight:500;
+    display:flex;align-items:center;gap:14px;}
+  .or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--line);}
 
   /* ---------- RSVP ---------- */
   .rsvp-card p{font-size:13.5px;line-height:1.9;color:#5c5e52;margin-bottom:26px;}
@@ -393,13 +408,17 @@
     <div class="eyebrow">Lista de presentes</div>
     <div class="title">Sugestões de <em>presentes</em></div>
     <div class="diamond-divider"><span></span></div>
-    <p class="gift-intro">Sua presença é o nosso maior presente! Mas, se quiser nos presentear, escolha um item abaixo e contribua via PIX.</p>
+    <p class="gift-intro">Sua presença é o nosso maior presente! Mas, se quiser nos presentear, escolha um item abaixo e contribua no cartão de crédito ou via PIX.</p>
 
     <div class="gifts" id="giftGrid"></div>
 
     <div class="card" style="margin-top:34px;">
-      <div class="pix-title" style="margin-top:0;">PRESENTEAR COM PIX</div>
+      <div class="pix-title" style="margin-top:0;">OUTRO VALOR</div>
       <p class="gift-intro" style="margin-bottom:18px;">Prefere contribuir com outro valor? Fique à vontade!</p>
+      <button class="btn btn-filled" onclick="openGift(-1)" style="width:100%;justify-content:center;margin-bottom:22px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19M6.5 15h4"/></svg>
+        CONTRIBUIR COM CARTÃO
+      </button>
       <div class="pix-box">
         <div class="pix-key" data-pix></div>
         <button class="copy-btn" onclick="copyPix(this)">
@@ -447,7 +466,20 @@
     <div class="eyebrow">Presentear</div>
     <div class="modal-item" id="mItem"></div>
     <div class="modal-price" id="mPrice"></div>
-    <p class="modal-text">Copie a chave PIX abaixo e faça a transferência no app do seu banco. Depois, se quiser, envie o comprovante para os noivos pelo WhatsApp.</p>
+
+    <div class="amount-field" id="mAmountWrap">
+      <label for="mAmount">VALOR DO PRESENTE (R$)</label>
+      <input type="text" id="mAmount" inputmode="decimal" placeholder="0,00">
+    </div>
+    <button class="btn btn-filled" id="mCard" onclick="payCard()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19M6.5 15h4"/></svg>
+      <span>PAGAR COM CARTÃO</span>
+    </button>
+    <div class="pay-note">Pagamento seguro via InfinitePay · parcele em até 12x</div>
+    <div class="pay-error" id="mError"></div>
+
+    <div class="or-divider">OU VIA PIX</div>
+    <p class="modal-text" style="margin-top:10px;">Copie a chave PIX abaixo e faça a transferência no app do seu banco. Depois, se quiser, envie o comprovante para os noivos pelo WhatsApp.</p>
     <div class="pix-box">
       <div class="pix-key" data-pix></div>
       <button class="copy-btn" onclick="copyPix(this)">
@@ -468,6 +500,8 @@
      ========================================================= */
   const PIX_KEY  = 'CHAVE PIX AQUI';      // ex.: (75) 99999-9999 ou e-mail/CPF
   const WHATSAPP = '5575999999999';       // DDI + DDD + número, só dígitos
+  const INFINITEPAY_HANDLE = 'jussara-de-santana';  // InfiniteTag ($jussara-de-santana), sem o "$"
+  const INFINITEPAY_API = 'https://api.infinitepay.io/invoices/public/checkout/links';
   const EVENT_DATE = '2027-02-27T16:30:00-03:00';
 
   // Fotos: salve em midia/presentes/01.jpg, 02.jpg ... (mesmo número do item)
@@ -529,15 +563,75 @@
 
   // Modal de presente
   const modal = document.getElementById('giftModal');
+  const CUSTOM_GIFT = { n:'Presente para os noivos', p:null };
+  let currentGift = null;
+
   function openGift(i){
-    const g = GIFTS[i];
+    const g = i < 0 ? CUSTOM_GIFT : GIFTS[i];
+    currentGift = g;
     document.getElementById('mItem').textContent = g.n;
-    document.getElementById('mPrice').textContent = brl(g.p);
+    document.getElementById('mPrice').textContent = g.p == null ? '' : brl(g.p);
+    document.getElementById('mAmountWrap').classList.toggle('show', g.p == null);
+    document.getElementById('mAmount').value = '';
+    setPayError('');
     const msg = `Olá, Jussara e João Pedro! Acabei de presentear vocês com: ${g.n}${g.p!=null?' ('+brl(g.p)+')':''}. 💚`;
     document.getElementById('mWhats').href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
     modal.classList.add('open');
   }
   function closeGift(){ modal.classList.remove('open'); }
+
+  function setPayError(msg){
+    const el = document.getElementById('mError');
+    el.textContent = msg;
+    el.classList.toggle('show', !!msg);
+  }
+
+  // "1.234,56" / "150" / "99.90" -> centavos
+  function parseCents(txt){
+    let t = String(txt).replace(/[^0-9.,]/g,'');
+    if(t.includes(',')) t = t.replace(/\./g,'').replace(',', '.');
+    else if(/\.\d{3}$/.test(t)) t = t.replace(/\./g,'');   // "1.250" = mil duzentos e cinquenta
+    const v = parseFloat(t);
+    return isFinite(v) ? Math.round(v*100) : 0;
+  }
+
+  // Cartão de crédito: gera um link de checkout na InfinitePay e redireciona
+  async function payCard(){
+    const g = currentGift;
+    const cents = g.p == null ? parseCents(document.getElementById('mAmount').value) : Math.round(g.p*100);
+    if(cents < 100){
+      setPayError('Informe um valor de pelo menos R$ 1,00.');
+      document.getElementById('mAmount').focus();
+      return;
+    }
+    setPayError('');
+    const btn = document.getElementById('mCard');
+    const label = btn.querySelector('span');
+    btn.disabled = true; label.textContent = 'GERANDO PAGAMENTO...';
+
+    const payload = {
+      handle: INFINITEPAY_HANDLE.replace(/^[$@]/,''),
+      order_nsu: 'jj-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,6),
+      items: [{ quantity:1, price:cents, description:('Presente: ' + g.n).slice(0,100) }]
+    };
+    if(/^https?:$/.test(location.protocol)) payload.redirect_url = location.href.split('#')[0] + '#presentes';
+
+    try{
+      const res = await fetch(INFINITEPAY_API, {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(()=>({}));
+      const url = data.url || data.payment_url;
+      if(!res.ok || !url) throw new Error('HTTP ' + res.status);
+      window.location.href = url;
+    }catch(err){
+      console.error('InfinitePay:', err);
+      setPayError('Não foi possível abrir o pagamento com cartão agora. Tente novamente em instantes ou presenteie via PIX abaixo.');
+      btn.disabled = false; label.textContent = 'PAGAR COM CARTÃO';
+    }
+  }
 
   // Preloader
   const preloader = document.getElementById('preloader');
