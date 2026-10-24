@@ -12,17 +12,18 @@
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&family=Jost:wght@300;400;500;600&display=swap');
 
   :root{
-    --cream:#f9f8f3;
+    --cream:#fbf9f2;
     --card:#ffffff;
-    --sage:#7f9479;        /* verde sálvia */
-    --sage-dark:#5f735a;
-    --mint:#b9dcc8;        /* verde menta */
-    --mint-pale:#e9f4ee;
-    --gold:#b8934a;        /* dourado */
+    --butter:#eed892;        /* amarelo manteiga (botões) */
+    --butter-deep:#a2843a;   /* manteiga escuro (textos de destaque) */
+    --butter-light:#f4e6b0;  /* manteiga claro (bordas) */
+    --butter-pale:#fcf6df;   /* manteiga bem claro (fundos) */
+    --on-butter:#4a3d1e;     /* texto sobre o amarelo */
+    --gold:#b8934a;          /* dourado */
     --gold-light:#d8bf85;
-    --text:#38392f;
-    --muted:#868a78;
-    --line:#e4e6da;
+    --text:#3b382f;
+    --muted:#8a8473;
+    --line:#ece5d3;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -41,9 +42,9 @@
   /* ---------- PRELOADER ---------- */
   #preloader{
     position:fixed;inset:0;z-index:999;
-    background:radial-gradient(circle at 50% 40%, #8aa083 0%, var(--sage) 45%, var(--sage-dark) 100%);
+    background:radial-gradient(circle at 50% 40%, #fdf6d8 0%, var(--butter-light) 45%, #e6cc7e 100%);
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    color:#fff;cursor:pointer;text-align:center;padding:30px;
+    color:var(--on-butter);cursor:pointer;text-align:center;padding:30px;
     transition:opacity .8s ease, visibility .8s ease;
   }
   #preloader.hidden{opacity:0;visibility:hidden;pointer-events:none;}
@@ -52,7 +53,7 @@
   #preloader .date{font-size:11px;letter-spacing:5px;opacity:.85;}
   #preloader .tap{
     font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-top:34px;
-    border:1px solid var(--gold-light);color:#fff;padding:12px 28px;border-radius:30px;
+    border:1px solid var(--gold);color:var(--on-butter);padding:12px 28px;border-radius:30px;
     animation:pulse 2s ease-in-out infinite;
   }
   @keyframes pulse{0%,100%{opacity:.6;}50%{opacity:1;}}
@@ -66,7 +67,7 @@
   .hero > img{position:absolute;top:0;left:0;width:100%;height:76%;object-fit:cover;object-position:center 80%;display:block;}
   .hero::after{
     content:'';position:absolute;left:0;right:0;top:0;height:76%;
-    background:linear-gradient(to bottom, rgba(249,248,243,0) 0%, rgba(249,248,243,0) 72%, rgba(249,248,243,0.6) 88%, var(--cream) 100%);
+    background:linear-gradient(to bottom, rgba(251,249,242,0) 0%, rgba(251,249,242,0) 72%, rgba(251,249,242,0.6) 88%, var(--cream) 100%);
   }
   .hero-content{
     position:absolute;bottom:0;left:0;right:0;z-index:2;
@@ -75,40 +76,40 @@
   .hero-mono{width:58px;height:auto;margin-bottom:10px;}
   .hero-names{
     font-family:'Cormorant Garamond',serif;font-weight:500;
-    font-size:clamp(30px, 9.4vw, 42px);color:#2f2f28;line-height:1.1;white-space:nowrap;
+    font-size:clamp(30px, 9.4vw, 42px);color:#302c22;line-height:1.1;white-space:nowrap;
   }
   .hero-names .amp{font-family:'Pinyon Script',cursive;color:var(--gold);font-size:.9em;padding:0 4px;}
-  .hero-loc{font-size:11px;letter-spacing:4px;line-height:1.9;color:var(--sage-dark);margin-top:12px;font-weight:500;}
+  .hero-loc{font-size:11px;letter-spacing:4px;line-height:1.9;color:var(--butter-deep);margin-top:12px;font-weight:500;}
 
   /* ---------- GENERIC SECTION ---------- */
   section{padding:64px 32px;text-align:center;position:relative;}
   .eyebrow{font-size:11.5px;letter-spacing:3.5px;color:var(--gold);font-weight:500;margin-bottom:8px;text-transform:uppercase;}
   .title{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--text);font-weight:500;}
-  .title em{font-style:italic;color:var(--sage-dark);font-weight:500;}
+  .title em{font-style:italic;color:var(--butter-deep);font-weight:500;}
   .diamond-divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:20px auto;}
   .diamond-divider::before,.diamond-divider::after{content:'';width:38px;height:1px;background:var(--gold-light);}
   .diamond-divider span{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);}
 
   .card{
     background:var(--card);border-radius:18px;
-    box-shadow:0 18px 46px -18px rgba(56,57,47,.18);
+    box-shadow:0 18px 46px -18px rgba(70,60,40,.18);
     padding:38px 28px;
   }
 
   /* ---------- VERSE CARD ---------- */
   .verse-card-wrap{margin-top:-70px;padding:0 26px;position:relative;z-index:3;}
   .verse-card{
-    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;line-height:1.7;color:#4f5146;
-    border-top:3px solid var(--mint);
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;line-height:1.7;color:#524c3f;
+    border-top:3px solid var(--butter-light);
   }
   .verse-ref{font-family:'Jost';font-style:normal;font-size:11px;letter-spacing:2.5px;color:var(--gold);margin-top:14px;font-weight:500;}
 
   /* ---------- INTRO ---------- */
-  .intro{font-size:14px;line-height:1.9;color:#5c5e52;max-width:340px;margin:0 auto;}
+  .intro{font-size:14px;line-height:1.9;color:#5e594c;max-width:340px;margin:0 auto;}
   .parents{margin:22px auto 24px auto;display:flex;flex-direction:column;align-items:center;gap:14px;}
   .parent-pair{font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.5;color:var(--text);}
   .parents-sep{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);}
-  .invite-names{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--sage-dark);margin-bottom:6px;}
+  .invite-names{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--butter-deep);margin-bottom:6px;}
   .invite-names em{font-family:'Pinyon Script',cursive;font-style:normal;color:var(--gold);padding:0 4px;}
 
   /* ---------- DATA / LOCAL ---------- */
@@ -121,21 +122,21 @@
 
   /* ---------- VENUE ---------- */
   .venue-art{width:82%;max-width:330px;margin:0 auto 26px auto;}
-  .venue-art img{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(56,57,47,.12));}
+  .venue-art img{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(70,60,40,.12));}
 
   /* ---------- NOSSA HISTÓRIA ---------- */
   .story-photo{width:100%;border-radius:16px;overflow:hidden;margin:6px 0 30px 0;}
   .story-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 75%;display:block;}
-  .story p{font-size:14px;line-height:1.95;color:#5c5e52;max-width:360px;margin:0 auto 18px auto;}
+  .story p{font-size:14px;line-height:1.95;color:#5e594c;max-width:360px;margin:0 auto 18px auto;}
   .story p:first-of-type::first-letter{
     font-family:'Cormorant Garamond',serif;font-size:46px;line-height:.8;color:var(--gold);
     float:left;padding:6px 8px 0 0;
   }
   .story p{text-align:left;}
   .story p.closing{text-align:center;margin-top:26px;}
-  .story .closing{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;line-height:1.6;color:var(--sage-dark);}
+  .story .closing{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;line-height:1.6;color:var(--butter-deep);}
   .badge{
-    display:inline-block;background:var(--mint-pale);color:var(--sage-dark);
+    display:inline-block;background:var(--butter-pale);color:var(--butter-deep);
     font-size:11px;letter-spacing:2.5px;font-weight:500;padding:7px 18px;border-radius:30px;margin-bottom:18px;
   }
   .venue-time{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:26px;color:var(--gold);margin-bottom:4px;}
@@ -145,13 +146,13 @@
 
   .btn{
     display:inline-flex;align-items:center;gap:10px;
-    border:1px solid #c9cdbd;border-radius:30px;padding:14px 30px;
+    border:1px solid #d9cfb4;border-radius:30px;padding:14px 30px;
     font-size:11.5px;letter-spacing:2px;color:var(--text);text-decoration:none;background:transparent;
     font-family:'Jost';cursor:pointer;
   }
   .btn svg{width:15px;height:15px;flex-shrink:0;}
   .btn-filled{
-    background:var(--sage);color:#fff;border-color:var(--sage);
+    background:var(--butter);color:var(--on-butter);border-color:var(--butter);
     font-weight:500;padding:16px 30px;font-size:12px;
   }
 
@@ -161,8 +162,8 @@
   .countdown .num{
     font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--text);
     background:var(--card);border-radius:12px;padding:14px 0;
-    box-shadow:0 10px 26px -14px rgba(56,57,47,.18);
-    border-bottom:2px solid var(--mint);
+    box-shadow:0 10px 26px -14px rgba(70,60,40,.18);
+    border-bottom:2px solid var(--butter-light);
   }
   .countdown .lbl{font-size:9.5px;letter-spacing:1.5px;color:var(--muted);margin-top:8px;}
 
@@ -172,20 +173,20 @@
   .manual-card{margin-top:-56px;}
   .tip{display:flex;flex-direction:column;align-items:center;padding:22px 20px;}
   .tip:not(:last-child){border-bottom:1px solid var(--line);}
-  .tip svg{width:26px;height:26px;stroke:var(--sage);margin-bottom:14px;}
-  .tip p{font-size:13.5px;line-height:1.8;color:#5c5e52;max-width:300px;}
+  .tip svg{width:26px;height:26px;stroke:var(--butter-deep);margin-bottom:14px;}
+  .tip p{font-size:13.5px;line-height:1.8;color:#5e594c;max-width:300px;}
   .tip b{color:var(--text);font-weight:500;}
 
   /* ---------- PRESENTES ---------- */
-  .gift-intro{font-size:13.5px;line-height:1.9;color:#5c5e52;margin-bottom:26px;}
+  .gift-intro{font-size:13.5px;line-height:1.9;color:#5e594c;margin-bottom:26px;}
   .gifts{display:grid;grid-template-columns:1fr 1fr;gap:14px;text-align:left;}
   .gift{
     background:var(--card);border-radius:14px;overflow:hidden;
-    box-shadow:0 12px 30px -16px rgba(56,57,47,.22);
+    box-shadow:0 12px 30px -16px rgba(70,60,40,.22);
     display:flex;flex-direction:column;
   }
   .gift-img{
-    aspect-ratio:1/1;background:var(--mint-pale);position:relative;
+    aspect-ratio:1/1;background:var(--butter-pale);position:relative;
     display:flex;align-items:center;justify-content:center;
   }
   .gift-img img.ph{width:42%;opacity:.35;}
@@ -198,29 +199,29 @@
     margin-top:auto;padding-top:10px;
   }
   .gift-btn button{
-    width:100%;background:var(--sage);color:#fff;border:none;border-radius:20px;
+    width:100%;background:var(--butter);color:var(--on-butter);border:none;border-radius:20px;
     padding:9px 6px;font-size:10px;letter-spacing:1.6px;font-family:'Jost';cursor:pointer;font-weight:500;
   }
 
   .pix-title{font-size:11.5px;letter-spacing:2.5px;color:var(--gold);margin:34px 0 18px 0;font-weight:500;
     display:flex;align-items:center;gap:14px;}
   .pix-title::before,.pix-title::after{content:'';flex:1;height:1px;background:var(--line);}
-  .pix-box{background:var(--mint-pale);border-radius:16px;padding:22px 20px;}
+  .pix-box{background:var(--butter-pale);border-radius:16px;padding:22px 20px;}
   .pix-label{font-size:11px;letter-spacing:2px;color:var(--muted);}
   .pix-amount{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--text);margin-top:2px;}
   .pix-key{font-size:15px;color:var(--text);font-weight:500;letter-spacing:.5px;word-break:break-all;}
   .copy-btn{
     display:inline-flex;align-items:center;gap:8px;margin-top:16px;
-    background:var(--sage-dark);color:#fff;border:none;border-radius:30px;
+    background:var(--butter);color:var(--on-butter);border:none;border-radius:30px;
     padding:11px 24px;font-size:11px;letter-spacing:2px;font-family:'Jost';cursor:pointer;
   }
-  .copy-btn svg{width:13px;height:13px;stroke:#fff;}
-  .signature{font-family:'Pinyon Script',cursive;font-size:30px;color:var(--sage-dark);margin-top:22px;}
+  .copy-btn svg{width:13px;height:13px;stroke:currentColor;}
+  .signature{font-family:'Pinyon Script',cursive;font-size:30px;color:var(--butter-deep);margin-top:22px;}
   .small-note{font-size:11px;color:var(--muted);margin-top:8px;}
 
   /* ---------- MODAL ---------- */
   #giftModal{
-    position:fixed;inset:0;z-index:200;background:rgba(40,42,34,.55);
+    position:fixed;inset:0;z-index:200;background:rgba(48,42,28,.55);
     display:flex;align-items:flex-end;justify-content:center;
     opacity:0;visibility:hidden;transition:opacity .35s ease, visibility .35s ease;
   }
@@ -235,7 +236,7 @@
   .modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:26px;color:var(--muted);cursor:pointer;line-height:1;}
   .modal-item{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--text);margin-top:4px;}
   .modal-price{font-size:15px;color:var(--gold);font-weight:500;margin-top:6px;}
-  .modal-text{font-size:13px;line-height:1.8;color:#5c5e52;margin:18px 0;}
+  .modal-text{font-size:13px;line-height:1.8;color:#5e594c;margin:18px 0;}
   .modal-sheet .btn{width:100%;justify-content:center;margin-top:14px;}
   .modal-sheet .btn[disabled]{opacity:.6;cursor:wait;}
   .amount-field{display:none;margin-top:16px;}
@@ -245,7 +246,7 @@
     width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;text-align:center;
     padding:14px 16px;font-family:'Jost';font-size:18px;color:var(--text);outline:none;
   }
-  .amount-field input:focus{border-color:var(--sage);}
+  .amount-field input:focus{border-color:var(--butter-deep);}
   .pay-error{display:none;font-size:12.5px;line-height:1.6;color:#a0533f;margin-top:12px;}
   .pay-error.show{display:block;}
   .pay-note{font-size:11px;color:var(--muted);margin-top:10px;}
@@ -257,13 +258,13 @@
   #musicBtn{
     position:fixed;bottom:18px;right:18px;z-index:60;
     width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
-    background:var(--card);color:var(--sage-dark);
-    box-shadow:0 10px 26px -10px rgba(56,57,47,.4);
+    background:var(--card);color:var(--butter-deep);
+    box-shadow:0 10px 26px -10px rgba(70,60,40,.4);
     display:flex;align-items:center;justify-content:center;
     opacity:0;visibility:hidden;transition:opacity .6s ease, visibility .6s ease;
   }
   #musicBtn.show{opacity:1;visibility:visible;}
-  #musicBtn svg{width:20px;height:20px;stroke:var(--sage-dark);}
+  #musicBtn svg{width:20px;height:20px;stroke:var(--butter-deep);}
   #musicBtn .bars{display:none;align-items:flex-end;gap:3px;height:16px;}
   #musicBtn .bars i{width:3px;background:var(--gold);border-radius:2px;animation:eq 1s ease-in-out infinite;}
   #musicBtn .bars i:nth-child(2){animation-delay:.2s;}
@@ -284,7 +285,7 @@
 <body class="locked">
 
 <div id="preloader">
-  <img class="mono" src="midia/monograma-branco.png" alt="J&amp;J">
+  <img class="mono" src="midia/monograma-ocre.png" alt="J&amp;J">
   <div class="names">Jussara &amp; João Pedro</div>
   <div class="date">27 · 02 · 2027</div>
   <div class="tap">Toque para abrir</div>
