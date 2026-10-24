@@ -184,8 +184,6 @@
     box-shadow:0 12px 30px -16px rgba(56,57,47,.22);
     display:flex;flex-direction:column;
   }
-  .gift.featured{grid-column:1 / -1;flex-direction:row;}
-  .gift.featured .gift-img{width:44%;aspect-ratio:auto;min-height:150px;}
   .gift-img{
     aspect-ratio:1/1;background:var(--mint-pale);position:relative;
     display:flex;align-items:center;justify-content:center;
@@ -499,7 +497,7 @@
   const PIX_KEY  = 'joao-pedro-kc9@jim.com';   // chave PIX (e-mail) — vai dentro do código, não aparece no convite
   const PIX_NAME = 'JOAO PEDRO';               // nome do recebedor (até 25 letras, sem acento)
   const PIX_CITY = 'MURITIBA';                 // cidade do recebedor (até 15 letras, sem acento)
-  const WHATSAPP = '5575999999999';       // DDI + DDD + número, só dígitos
+  const WHATSAPP = '5575983671835';       // (75) 98367-1835 — DDI + DDD + número, só dígitos
   const INFINITEPAY_HANDLE = 'jussara-de-santana';  // InfiniteTag ($jussara-de-santana), sem o "$"
   // endereço atual da documentação e o antigo, tentado se o primeiro falhar
   const INFINITEPAY_APIS = [
@@ -532,12 +530,14 @@
     { n:'Jogo de jantar (30 peças)',   p:250.00 },
     { n:'Faqueiro de inox',            p:120.00 },
     { n:'Jarra de suco',               p:40.00 },
-    { n:'Refratária',                  p:null },
+    { n:'Refratária',                  p:60.00 },
     { n:'Jogo de toalhas Kasten',      p:128.00 },
     { n:'Jogo de cama casal',          p:180.00 },
     { n:'Edredom casal',               p:220.00 },
     { n:'Smart TV 55" 4K',             p:2500.00 },
     { n:'Cobertor para o noivo 🛌',    p:100.00, note:'Porque a noiva já está coberta de razão. Kkkk', featured:true },
+    { n:'Jogo de copos',               p:55.00 },
+    { n:'Jogo de sousplat',            p:70.00 },
   ];
 
   const brl = v => v == null ? 'Valor livre' : v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
